@@ -279,7 +279,7 @@ import megamek.server.victory.VictoryResult;
 /**
  * @author Ben Mazur
  */
-public class Server extends SocketServer {
+public class Server extends WebSocketServer {
     private static class EntityTargetPair {
         Entity ent;
 
