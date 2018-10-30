@@ -110,7 +110,7 @@ import megamek.server.SmokeCloud;
  * This class is instanciated for each client and for each bot running on that
  * client. non-local clients are not also instantiated on the local server.
  */
-public class Client extends SocketClient implements IClientCommandHandler {
+public class Client extends WebSocketClient implements IClientCommandHandler {
     public static final String CLIENT_COMMAND = "#";
 
     // we need these to communicate with the server

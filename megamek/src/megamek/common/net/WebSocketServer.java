@@ -1,16 +1,22 @@
 package megamek.common.net;
 
+import megamek.common.net.marshall.PacketMarshaller;
+import megamek.common.net.marshall.PacketMarshallerFactory;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
-public class WebSocketServer  {
+public class WebSocketServer {
 
-    org.java_websocket.server.WebSocketServer webSocketServer;
-    int port = -1;
+    private org.java_websocket.server.WebSocketServer webSocketServer;
+    private List<WebSocketConnection> connections = new ArrayList<>();
+    private PacketSerializer packetSerializer = null;
+    private int port = -1;
 
     /**
      * Called after the server is in a state ready to accept new incoming connections.
@@ -71,35 +77,68 @@ public class WebSocketServer  {
         webSocketServer = new org.java_websocket.server.WebSocketServer(new InetSocketAddress(port)) {
             @Override
             public void onOpen(WebSocket conn, ClientHandshake handshake) {
-
+                WebSocketConnection wsConn = new WebSocketConnection(conn);
+                conn.setAttachment(wsConn);
+                connections.add(wsConn);
+                onConnectionOpen(wsConn);
             }
 
             @Override
             public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-
+                for (WebSocketConnection wsConn : connections) {
+                    if (wsConn.wraps(conn)) {
+                        connections.remove(wsConn);
+                        wsConn.close();
+                        onConnectionClose(wsConn);
+                        return;
+                    }
+                }
             }
 
             @Override
             public void onMessage(WebSocket conn, String message) {
+                // we don't have textual message support
             }
 
             @Override
             public void onMessage(WebSocket conn, ByteBuffer message) {
+                WebSocketConnection wsConn = null;
+                for (WebSocketConnection c : connections) {
+                    if (c.wraps(conn)) {
+                        wsConn = c;
+                        break;
+                    }
+                }
+
+                if (wsConn == null) {
+                    return;
+                }
+
+                if (packetSerializer == null) {
+                    packetSerializer = new PacketSerializer(PacketMarshallerFactory.getInstance().getMarshaller(PacketMarshaller.NATIVE_SERIALIZATION_MARSHALING));
+                }
+                try {
+                    onPacketReceived(wsConn, packetSerializer.read(message));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onError(WebSocket conn, Exception ex) {
+                ex.printStackTrace();
             }
 
             @Override
             public void onStart() {
-
+                setConnectionLostTimeout(0);
+                setConnectionLostTimeout(1000);
+                onListen();
             }
         };
 
         webSocketServer.start();
         this.port = port;
-        onListen();
     }
 
     protected int getLocalPort() {
