@@ -328,7 +328,7 @@ W,3049-Clan3070-Clan,3049-Clan_Experimental3070-Clan_Advanced,CLiATM3,Clan iATM-
 W,3049-Clan3070-Clan,3049-Clan_Experimental3070-Clan_Advanced,CLiATM6,Clan iATM-6,
 W,3049-Clan3070-Clan,3049-Clan_Experimental3070-Clan_Advanced,CLiATM9,Clan iATM-9,
 W,3049-Clan3070-Clan,3049-Clan_Experimental3070-Clan_Advanced,CLiATM12,Clan iATM-12,
-W,3072-Clan,3072-Clan_Experimental,Fusillade,Fussilade,
+W,3072-Clan,3072-Clan_Experimental,Fussilade,
 W,3057-Inner Sphere,3057-IS_TW_Non_Box,MRM 1,MRM-1,ISMRM1,IS MRM 1,
 W,3057-Inner Sphere,3057-IS_TW_Non_Box,MRM 2,MRM-2,ISMRM2,IS MRM 2,
 W,3057-Inner Sphere,3057-IS_TW_Non_Box,MRM 3,MRM-3,ISMRM3,IS MRM 3,

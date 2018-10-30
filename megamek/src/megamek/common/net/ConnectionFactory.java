@@ -16,7 +16,7 @@ package megamek.common.net;
 import org.java_websocket.WebSocket;
 
 import java.net.Socket;
-import java.net.URL;
+import java.net.URI;
 
 /**
  * Connections factory. Creates the Client/Server connections
@@ -49,8 +49,8 @@ public class ConnectionFactory {
         return new DataStreamConnection(host, port, id);
     }
 
-    public IConnection createClientConnection(URL url, int id) {
-        return new NbtWebSocketConnection(url, id);
+    public IConnection createClientConnection(URI uri, int id) {
+        return new WebSocketConnection(uri, id);
     }
     /**
      * Creates new Server connection
@@ -61,9 +61,5 @@ public class ConnectionFactory {
      */
     public IConnection createServerConnection(Socket socket, int id) {
         return new DataStreamConnection(socket, id);
-    }
-
-    public IConnection createServerConnection(WebSocket webSocket, int id) {
-        return new NbtWebSocketConnection(webSocket, id);
     }
 }

@@ -1,23 +1,18 @@
 package megamek.common.net;
 
-import org.java_websocket.WebSocket;
-import java.net.URL;
+import megamek.common.net.marshall.PacketMarshaller;
+import megamek.common.net.marshall.PacketMarshallerFactory;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.io.IOException;
+import java.net.URI;
+import java.nio.ByteBuffer;
 
 public class WebSocketClient {
-    private WebSocket webSocket = null;
-    int id;
-
-    // client connections
-    public WebSocketClient(URL url, int id) {
-        // use url to open connection (create WebSocket) to URL
-        this.id = id;
-    }
-
-    // server connections
-    public WebSocketClient(WebSocket webSocket, int id) {
-        this.webSocket = webSocket;
-        this.id = id;
-    }
+    private WebSocketConnection connection = null;
+    private PacketSerializer packetSerializer = null;
+    private boolean connected = false;
+    private int id;
 
     /**
      * Stub implementation of onPacketReceived(); subclass should
@@ -39,5 +34,93 @@ public class WebSocketClient {
      * must handle any thread synchronization issues.
      */
     protected void onRemoteDisconnection() {
+    }
+
+    private PacketSerializer getPacketSerializer() {
+        if (packetSerializer == null) {
+            packetSerializer = new PacketSerializer(PacketMarshallerFactory.getInstance().getMarshaller(PacketMarshaller.NATIVE_SERIALIZATION_MARSHALING));
+        }
+
+        return packetSerializer;
+    }
+
+    protected boolean connect(String hostname, int port) {
+        try {
+            URI uri = new URI("http", null, hostname, port, null, null, null);
+            org.java_websocket.client.WebSocketClient webSocketClient = new org.java_websocket.client.WebSocketClient(uri) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    // not implemented, textual messages not supported
+                }
+
+                @Override
+                public void onMessage(ByteBuffer message) {
+                    PacketSerializer serializer = getPacketSerializer();
+                    try {
+                        Packet packet = serializer.read(message);
+                        onPacketReceived(packet);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    if (remote) {
+                        onRemoteDisconnection();
+                    }
+                }
+
+                @Override
+                public void onError(Exception ex) {
+
+                }
+            };
+
+            connection = new WebSocketConnection(webSocketClient);
+            webSocketClient.connect();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    protected void disconnect() {
+        if (connection == null) {
+            return;
+        }
+
+        connection.close();
+    }
+
+    protected void send(Packet packet) {
+        if (connection == null) {
+            return;
+        }
+
+        connection.send(packet);
+    }
+
+    protected boolean isConnected() {
+        return (connection != null) && connected;
+    }
+
+    protected void serverHandshakeCompleted() {
+        connected = true;
+    }
+
+    protected String getName() {
+        return "(Unknown)";
+    }
+
+    protected void flushConn() {
+        // not implemented
     }
 }
