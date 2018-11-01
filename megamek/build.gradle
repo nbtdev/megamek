@@ -2,7 +2,10 @@ plugins {
     id 'application'
     id 'maven-publish'
     id 'edu.sc.seis.launch4j' version '2.4.4'
+    id 'com.bmuschko.docker-remote-api' version '4.0.3'
 }
+
+import com.bmuschko.gradle.docker.tasks.image.*
 
 sourceSets {
     main {
@@ -69,6 +72,8 @@ ext {
     scriptTemplate = "${scriptsDir}/startScriptTemplate.txt"
     osxApplicationStub = "${scriptsDir}/universalJavaApplicationStub"
     osxBundleDir = "${buildDir}/osxBundle"
+    dockerSrcDir = "${projectDir}/../docker"
+    dockerBuildDir = "${buildDir}/docker"
 }
 
 jar {
@@ -79,6 +84,7 @@ jar {
             .findAll { it.name.endsWith(".jar") }.collect { "${lib}/${it.name}" }.join(' ')
     }
 }
+
 
 task officialUnitList(type: JavaExec, dependsOn: jar) {
     description = 'Compiles a list of all units that come from official sources and saves it in the docs folder.'
@@ -105,7 +111,7 @@ task copyFiles(type: Copy) {
     
     dependsOn officialUnitList
     dependsOn equipmentList
-    
+
     from projectDir
     
     include "${data}/**"
@@ -318,6 +324,33 @@ macDistTar {
     compression = Compression.BZIP2
 }
 
+task copyImageFiles (type: Copy) {
+    description = "Copy Docker build files"
+    from dockerSrcDir
+    into dockerBuildDir
+}
+
+task copyUnixTarball (type: Copy) {
+    description = "Copy Unix build into Docker context root"
+
+    dependsOn unixDistTar
+
+    from unixDistTar
+    into dockerBuildDir
+}
+
+task buildDockerImage (type: DockerBuildImage) {
+    dependsOn copyUnixTarball
+    dependsOn copyImageFiles
+
+    inputDir = file(dockerBuildDir)
+
+    def tarballName = "${unixDistTar.baseName}-${version}"
+    buildArgs = ['tarballName': tarballName]
+
+    tag = "nbt-mm:latest"
+}
+
 // The repository can only be cloned into an empty directory so we need to delete anything left over
 // from a previous build
 task deleteRepoDir (type: Delete) {
@@ -433,4 +466,3 @@ task cleanPublishingDir (type: Delete) {
 }
 
 publishPublishMMLibraryPublicationToMavenRepository.dependsOn cleanPublishingDir
-

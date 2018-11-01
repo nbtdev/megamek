@@ -35,4 +35,3 @@ def localProperties = file('properties_local.gradle')
 if (localProperties.exists()) {
     apply from: localProperties
 }
-
