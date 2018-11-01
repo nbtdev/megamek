@@ -256,6 +256,7 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
 
         MegamekButton hostB;
         MegamekButton connectB;
+        MegamekButton NBT_B;
         MegamekButton botB;
         MegamekButton editB;
         MegamekButton skinEditB;
@@ -283,6 +284,10 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
                 SkinSpecification.UIComponents.MainMenuButton.getComp(), true);
         connectB.setActionCommand("fileGameConnect"); //$NON-NLS-1$
         connectB.addActionListener(actionListener);
+        NBT_B = new MegamekButton(Messages.getString("MegaMek.NBTMatchmaker.label"), //$NON-NLS-1$
+                SkinSpecification.UIComponents.MainMenuButton.getComp(), true);
+        NBT_B.setActionCommand("fileGameNBT"); //$NON-NLS-1$
+        NBT_B.addActionListener(actionListener);
         botB = new MegamekButton(Messages.getString("MegaMek.ConnectAsBot.label"), //$NON-NLS-1$
                 SkinSpecification.UIComponents.MainMenuButton.getComp(), true);
         botB.setActionCommand("fileGameConnectBot"); //$NON-NLS-1$
@@ -368,6 +373,7 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
 
         hostB.setPreferredSize(minButtonDim);
         connectB.setPreferredSize(minButtonDim);
+        NBT_B.setPreferredSize(minButtonDim);
         botB.setPreferredSize(minButtonDim);
         editB.setPreferredSize(minButtonDim);
         skinEditB.setPreferredSize(minButtonDim);
@@ -377,6 +383,7 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
         hostB.setPreferredSize(minButtonDim);
 
         connectB.setMinimumSize(minButtonDim);
+        NBT_B.setMinimumSize(minButtonDim);
         botB.setMinimumSize(minButtonDim);
         editB.setMinimumSize(minButtonDim);
         skinEditB.setMinimumSize(minButtonDim);
@@ -414,6 +421,8 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
         addBag(scenB, gridbag, c);
         c.gridy++;
         addBag(connectB, gridbag, c);
+        c.gridy++;
+        addBag(NBT_B, gridbag, c);
         c.gridy++;
         addBag(botB, gridbag, c);
         c.gridy++;
@@ -918,6 +927,14 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
         launch(gui.getFrame());
     }
 
+    /**
+     * Show the "looking for game" dialog
+     */
+    void lookingForGame() {
+        LookingForGameDialog lfg = new LookingForGameDialog(frame);
+        lfg.setVisible(true);
+    }
+
     void connectBot() {
         ConnectDialog cd;
         cd = new ConnectDialog(frame);
@@ -1143,6 +1160,9 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
             }
             if ("fileGameConnect".equalsIgnoreCase(ev.getActionCommand())) { //$NON-NLS-1$
                 connect();
+            }
+            if ("fileGameNBT".equalsIgnoreCase(ev.getActionCommand())) { //$NON-NLS-1$
+                lookingForGame();
             }
             if ("fileGameConnectBot".equalsIgnoreCase(ev.getActionCommand())) { //$NON-NLS-1$
                 connectBot();
