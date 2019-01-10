@@ -6,6 +6,7 @@ Snowden Mining Station (Standard)|
 Drake SDS Control Station (Standard)|
 Crucible Station (Standard)|
 Hong Lung Interdiction Station (Standard)|
+Habitat - Small (2750)|
 Unpressurized Yard - Large (2300)|
 Unpressurized Yard - Huge (2350)|
 Pressurized Yard - Small (2200)|
@@ -14,16 +15,16 @@ Factory - Medium/Large (2750)|
 Factory - Medium/Large (2400)|
 Alliance Space Station (2713)|
 Bastion System Defense Station (2584)|
-Habitat - Small (2400)|
 Unpressurized Yard - Medium (2250)|
 Habitat - Large (2750)|
 Olympus Recharge Station (2942)|
 Pressurized Yard - Large (2400)|
-BattleSat System Defense Station (3089)|
 Olympus Recharge Station (2663)|
+BattleSat System Defense Station (3089)|
 Olympus Recharge Station (3072)|
 Bastion System Defense Station (3058)|
 BattleSat System Defense Station (3056)|
+Habitat - Small (2400)|
 Alliance Space Station (3061)|
 Pressurized Yard - Medium (2350)|
 Pressurized Yard - Huge (2450)|
@@ -190,6 +191,7 @@ Fredasa Corvette Raider (2962)|
 Sovetskii Soyuz Heavy Cruiser (2845)|
 M5C Capital Drone (Caspar)|
 M5 Capital Drone (Caspar)|
+Newgrange III Yardship 'Eyrines'|
 Newgrange Yardship (Standard)|
 Commonwealth Light Cruiser (Block I)|
 Commonwealth Light Cruiser (Block II)|
@@ -4074,18 +4076,20 @@ Quickdraw QKD-8X|
 Charger CGR-1X1|
 Firestarter FS9-X81|
 Arbiter SecurityMech ARB-001|
-Roughneck RGH-1A|
 Roughneck RGH-3A|
-Roughneck RGH-1B|
-Roughneck RGH-R Reaver|
-Sun Spider B|
-Sun Spider Prime|
-Roughneck RGH-2A|
 Sun Spider C|
+Roughneck RGH-R Reaver|
+Sun Spider Vanguard|
+Roughneck RGH-2A|
+Roughneck RGH-1A|
 Roughneck RGH-1C|
-Sun Spider A|
-Sun Spider D|
+Roughneck RGH-PH Powerhouse|
 Sun Spider Manul|
+Sun Spider D|
+Sun Spider B|
+Sun Spider A|
+Sun Spider Prime|
+Roughneck RGH-1B|
 Sagittaire SGT-9D|
 Templar TLR1-OD|
 Lao Hu LHU-3L|
@@ -5602,6 +5606,7 @@ Sea Skimmer Hydrofoil 'Sniper'|
 Maxim Flanker (Standard)|
 Skulker Wheeled Scout Tank X-5|
 SturmFeur 'Kalki' Cruise Missile Launcher (Standard)|
+Desert Scorpion (Standard)|
 Shoden Assault Vehicle (LB-X)|
 Enyo Strike Tank (LB-X) 'Sholef'|
 Morrigu Fire Support Vehicle (HAG)|
