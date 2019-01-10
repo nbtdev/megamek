@@ -1,0 +1,11 @@
+before_script:
+
+
+client:
+  script:
+    - cd docker && ls
+
+server:
+  script:
+    - cd megamek && ls
+
