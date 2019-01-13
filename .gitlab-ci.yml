@@ -1,10 +1,14 @@
-image: gradle:jdk8
+image: docker:latest
+
+service:
+  - docker:dind
 
 stages:
   - build
   - deploy
 
 assemble:
+  image: gradle:jdk8
   stage: build
   script:
     - ./gradlew assembleDist
@@ -13,5 +17,20 @@ server:
   stage: build
   script:
     - ./gradlew assembleUnixDist
+  artifacts:
+    paths:
+      - megamek/build/distributions/*
+
+deploy_client:
+  stage: deploy
+  script: 
+    - ls
+
+deploy_server:
+  stage: deploy
+  script:
+    - $(aws ecr get-login --no-include-email --region us-west-1)
     - cd docker
-    - docker build -t nbt-mm:latest --build-arg tarballName=megamek-0.45.3-SNAPSHOT .
+    - docker build -t $AWS_ECR_URI --build-arg tarballName=megamek-0.45.3-SNAPSHOT .
+    - docker push $AWS_ECR_URI
+
