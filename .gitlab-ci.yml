@@ -30,9 +30,9 @@ deploy_client:
     - apk add --no-cache curl jq python py-pip
     - pip install awscli
     - $(aws ecr get-login --no-include-email --region us-west-2)
-    - aws s3 cp megamek/build/distributions/megamek-$NBT_MM_BUILD_NAME.tar.gz s3://$AWS_BUCKET/megamek-nbt-mm-dev.tar.gz
-    - aws s3 cp megamek/build/distributions/megamek-mac-$NBT_MM_BUILD_NAME.tar.bz2 s3://$AWS_BUCKET/megamek-nbt-mm-mac-dev.tar.bz2
-    - aws s3 cp megamek/build/distributions/megamek-windows-$NBT_MM_BUILD_NAME.zip s3://$AWS_BUCKET/megamek-nbt-mm-windows-dev.zip
+    - aws s3 cp megamek/build/distributions/megamek-$NBT_MM_BUILD_NAME.tar.gz s3://$AWS_BUCKET/dev/megamek-nbt-mm.tar.gz
+    - aws s3 cp megamek/build/distributions/megamek-mac-$NBT_MM_BUILD_NAME.tar.bz2 s3://$AWS_BUCKET/dev/megamek-nbt-mm-mac.tar.bz2
+    - aws s3 cp megamek/build/distributions/megamek-windows-$NBT_MM_BUILD_NAME.zip s3://$AWS_BUCKET/dev/megamek-nbt-mm-windows.zip
 
 
 deploy_server:
