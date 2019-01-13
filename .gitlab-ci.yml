@@ -4,9 +4,9 @@ services:
   - docker:dind
 
 variables:
-  - AWS_ECR_URI: 068936280303.dkr.ecr.us-west-2.amazonaws.com/nbt-mm
-  - AWS_BUCKET: nbt-mm
-  - NBT_MM_BUILD_NAME: 0.45.3-SNAPSHOT
+  AWS_ECR_URI: 068936280303.dkr.ecr.us-west-2.amazonaws.com/nbt-mm
+  AWS_BUCKET: nbt-mm
+  NBT_MM_BUILD_NAME: 0.45.3-SNAPSHOT
 
 stages:
   - build
