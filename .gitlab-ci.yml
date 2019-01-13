@@ -41,10 +41,11 @@ deploy_server:
     GIT_STRATEGY: none
     NBT_MM_BUILD_NAME: 0.45.3-SNAPSHOT
   script:
+    - cp megamek/build/distributions/*.tar.gz docker
+    - cd docker
+    - docker build -t $AWS_ECR_URI:DEV --build-arg tarballName=megamek-$NBT_MM_BUILD_NAME .
     - apk add --no-cache curl jq python py-pip
     - pip install awscli
     - $(aws ecr get-login --no-include-email --region us-west-2)
-    - cd docker
-    - docker build -t $AWS_ECR_URI:DEV --build-arg tarballName=megamek-$NBT_MM_BUILD_NAME .
     - docker push $AWS_ECR_URI:DEV
 
