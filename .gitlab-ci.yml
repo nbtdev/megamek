@@ -20,7 +20,7 @@ assemble:
   artifacts:
     paths:
       - megamek/build/distributions/*
-      - megamek/docker/*
+      - docker/*
 
 deploy_client:
   stage: deploy
