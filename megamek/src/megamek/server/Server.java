@@ -413,6 +413,8 @@ public class Server extends WebSocketServer {
     private Vector<DynamicTerrainProcessor> terrainProcessors = new Vector<>();
 
     private Timer watchdogTimer = new Timer("Watchdog Timer");
+    private Timer idleTimer;
+    private Long idleTimeout = 60000L;
 
     private static EntityVerifier entityVerifier;
 
@@ -569,6 +571,9 @@ public class Server extends WebSocketServer {
 
         // Fully initialised, now accept connections
         listen(port);
+
+        // set up an idle timer; if the server is empty when this fires, then it shuts down the server
+        startIdleTimer(idleTimeout);
 
         serverInstance = this;
     }
@@ -1097,6 +1102,10 @@ public class Server extends WebSocketServer {
         newPlayer.setTeam(Math.min(team, 5));
         game.addPlayer(connId, newPlayer);
         validatePlayerInfo(connId);
+
+        // if there is an active idle timer, cancel it now
+        idleTimer.cancel();
+
         return newPlayer;
     }
 
@@ -1192,6 +1201,9 @@ public class Server extends WebSocketServer {
         // Reset the game after Elvis has left the building.
         if (0 == game.getNoOfPlayers()) {
             resetGame();
+
+            // also kick off a new idle timer
+            startIdleTimer(idleTimeout);
         }
     }
 
@@ -37219,5 +37231,27 @@ public class Server extends WebSocketServer {
 
     public void setHexUpdateSet(HashSet<Coords> hexUpdateSet) {
         this.hexUpdateSet = hexUpdateSet;
+    }
+
+    void startIdleTimer(Long milliseconds) {
+        if (idleTimer != null) {
+            idleTimer.cancel();
+        }
+
+        idleTimer = new Timer("Idle Timer");
+
+        idleTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (serverLock) {
+                    logInfo("startIdleTimer/task","Idle timer expired");
+                    if (0 == game.getNoOfPlayers()) {
+                        logWarning("startIdleTimer/task", "No players on the server, exiting...");
+                        die();
+                        System.exit(0);
+                    }
+                }
+            }
+        }, milliseconds);
     }
 }
