@@ -40,6 +40,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -57,6 +58,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
+import com.netbattletech.nbt.LobbySession;
 import megamek.MegaMek;
 import megamek.client.Client;
 import megamek.client.bot.BotClient;
@@ -70,6 +72,7 @@ import megamek.client.ui.swing.util.MegaMekController;
 import megamek.client.ui.swing.widget.MegamekButton;
 import megamek.client.ui.swing.widget.SkinSpecification;
 import megamek.client.ui.swing.widget.SkinXMLHandler;
+import megamek.client.ui.swing.nbt.LookingForGameDialog;
 import megamek.common.Compute;
 import megamek.common.Configuration;
 import megamek.common.IGame;
@@ -113,6 +116,9 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
     private MegaMekController controller;
 
     BufferedImage backgroundIcon = null;
+
+    // matchmaker support
+    LobbySession session = null;
 
     public void start(String[] args) {
         createGUI();
@@ -922,8 +928,16 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
      * Show the "looking for game" dialog
      */
     void lookingForGame() {
-        LookingForGameDialog lfg = new LookingForGameDialog(frame);
-        lfg.setVisible(true);
+        try {
+            if (session != null) {
+                session.close();
+            }
+
+            //session = new LobbySession("ws://lobby.netbattletech.com:5151/lobbies", client.getName(), frame);
+            session = new LobbySession("ws://lobby.netbattletech.com:5151/lobbies", "Player1", frame);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     void connectBot() {

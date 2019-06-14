@@ -33020,7 +33020,7 @@ public class Server extends WebSocketServer {
     public void onConnectionClose(IConnection conn) {
         synchronized (serverLock) {
             // write something in the log
-            logInfo("disconnected(DisconnectedEvent)", "s: connection " + conn.getId() + " disconnectd");
+            getLogger().info(getClass(), "disconnected(DisconnectedEvent)", "s: connection " + conn.getId() + " disconnectd");
 
             connections.removeElement(conn);
             connectionsPending.removeElement(conn);
@@ -37367,9 +37367,10 @@ public class Server extends WebSocketServer {
             @Override
             public void run() {
                 synchronized (serverLock) {
-                    logInfo("startIdleTimer/task","Idle timer expired");
+                    getLogger().info(getClass(), "startIdleTimer/task","Idle timer expired");
+
                     if (0 == game.getNoOfPlayers()) {
-                        logWarning("startIdleTimer/task", "No players on the server, exiting...");
+                        getLogger().warning(getClass(), "startIdleTimer/task", "No players on the server, exiting...");
                         die();
                         System.exit(0);
                     }
