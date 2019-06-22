@@ -1,9 +1,6 @@
 package com.netbattletech.nbt.model;
 
-import com.netbattletech.nbt.IChat;
-import com.netbattletech.nbt.IChatEntry;
-import com.netbattletech.nbt.ILobby;
-import com.netbattletech.nbt.ISessionDataModel;
+import com.netbattletech.nbt.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +9,7 @@ import java.util.List;
 public class SessionData implements ISessionDataModel {
     ArrayList<ILobby> lobbies = new ArrayList<>();
     IChat chat;
+    IPlayer player;
 
     public SessionData() {
         this.chat = new Chat();
@@ -33,6 +31,9 @@ public class SessionData implements ISessionDataModel {
     }
 
     @Override
+    public void updatePlayer(IPlayer player) { this.player = player; }
+
+    @Override
     public void removeLobby(ILobby lobby) {
         Lobby _lobby = (Lobby)lobby;
         this.lobbies.removeIf(l -> ((Lobby)l).getId().equals(_lobby.getId()));
@@ -48,4 +49,7 @@ public class SessionData implements ISessionDataModel {
     public void clearLobbies() {
         this.lobbies.clear();
     }
+
+    @Override
+    public IPlayer player() { return player; }
 }

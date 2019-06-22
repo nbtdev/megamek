@@ -4,5 +4,6 @@ public interface ISessionViewControl {
     void requestLobbyCreate(IPlayer owner, int lowerLimit, int upperLimit);
     void joinLobby(ILobby lobby);
     void postChat(String text);
+    void setCallsign(String callsign);
     void onViewClose();
 }

@@ -3,6 +3,7 @@ package megamek.client.ui.swing.nbt;
 import com.netbattletech.nbt.*;
 import com.netbattletech.nbt.model.Lobby;
 import megamek.client.ui.Messages;
+import megamek.common.preference.PreferenceManager;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -16,12 +17,11 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
     private JButton buttonJoinSelected;
     private JButton buttonCreateLobby;
 
-    private JSpinner spinnerUpdateInterval;
     private JSpinner spinnerMaxBV;
 
     private JTable lobbyTable;
-    private JComboBox leagueList;
     private ChatWidget chat;
+    private JTextField playerName;
 
     private LobbyTableModel lobbyTableModel;
 
@@ -32,6 +32,14 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
         synchronized (buttonJoinSelected) {
             buttonJoinSelected.setEnabled(enabled);
         }
+    }
+
+    public String getPlayerName() {
+        if (playerName == null) {
+            return "";
+        }
+
+        return playerName.getText();
     }
 
     Lobby getSelectedLobby() {
@@ -65,9 +73,6 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
         // panel to contain the table and controls
         JPanel tablePanel = new JPanel(new GridBagLayout());
 
-        // panel to contain the right-side button/control stack
-        JPanel rightPanel = new JPanel(new GridBagLayout());
-
         // panel to contain these two panels
         JPanel topPanel = new JPanel(new GridBagLayout());
 
@@ -75,10 +80,6 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
         c.weighty = 1.0;
         c.anchor = GridBagConstraints.NORTHWEST;
         topPanel.add(tablePanel, c);
-        c.weightx = 0.0;
-        c.anchor = GridBagConstraints.NORTHEAST;
-        c.gridx = 1;
-        topPanel.add(rightPanel, c);
 
         // panel to contain the bottom row of buttons (OK, Cancel)
         JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -105,23 +106,54 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
-        c.gridy = 0;
+
+        int gridY = 0;
+        c.gridy = gridY++;
+
+        // subpanel for the callsign entry label and box
+        JPanel callsignPanel = new JPanel(new GridBagLayout());
+        tablePanel.add(callsignPanel, c);
+        GridBagConstraints c2 = new GridBagConstraints();
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = 0;
+        c2.gridy = 0;
+        c2.weightx = 0.0;
+        c2.weighty = 0.0;
+        callsignPanel.add(new JLabel(Messages.getString("LookingForGame.callsign") + ": "), c2);
+
+        c2.gridx = 1;
+        c2.weightx = 1.0;
+        IPlayer player = model.player();
+        String callsign = new String();
+        if (player != null) {
+            callsign = player.callsign();
+        }
+        playerName = new JTextField(callsign);
+        callsignPanel.add(playerName, c2);
+
+        c2.weightx = 0.0;
+        c2.gridx = 2;
+        JButton updateButton = new JButton(Messages.getString("LookingForGame.update"));
+        callsignPanel.add(updateButton, c2);
+
+
+        c.gridy = gridY++;
         tablePanel.add(new JLabel(Messages.getString("LookingForGame.availableLobbies")), c);
         c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.WEST;
         c.weighty = 1.0;
-        c.gridy = 1;
+        c.gridy = gridY++;
         tablePanel.add(new JScrollPane(lobbyTable), c);
 
         chat = new ChatWidget();
-        c.gridy = 2;
+        c.gridy = gridY++;
         c.weighty = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         tablePanel.add(chat, c);
 
         c.weighty = 0.0;
         c.fill = GridBagConstraints.NONE;
-        c.gridy = 3;
+        c.gridy = gridY++;
         JPanel lobbyButtons = new JPanel();
         lobbyButtons.add(buttonJoinSelected);
         lobbyButtons.add(buttonCreateLobby);
@@ -130,40 +162,9 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
         tablePanel.add(lobbyButtons, c);
         setJoinButtonState(false);
 
-        // right-side button/control stack
-        JLabel leagueListLabel = new JLabel(Messages.getString("LookingForGame.leagueListing"));
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.EAST;
-        c.fill = GridBagConstraints.NONE;
-        rightPanel.add(leagueListLabel, c);
-
-        leagueList = new JComboBox();
-        c.gridx = 1;
-        c.anchor = GridBagConstraints.WEST;
-        rightPanel.add(leagueList, c);
-
-        c.gridx = 0;
-        c.gridy = 1;
-        c.anchor = GridBagConstraints.EAST;
-        rightPanel.add(new JLabel(Messages.getString("LookingForGame.refreshInterval")), c);
-        spinnerUpdateInterval = new JSpinner(new SpinnerNumberModel(5, 1, 30, 1));
-        c.gridx = 1;
-        c.anchor = GridBagConstraints.WEST;
-        rightPanel.add(spinnerUpdateInterval, c);
-
-        JPanel spacer = new JPanel();
-        spacer.setMaximumSize(new Dimension(20000,20000));
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 2;
-        c.weighty = 1.0;
-        c.weightx = 1.0;
-        rightPanel.add(spacer, c);
-
-        buttonOK = new JButton(Messages.getString("LookingForGame.Okay")); //$NON-NLS-1$
-        buttonCancel = new JButton(Messages.getString("LookingForGame.Cancel")); //$NON-NLS-1$
+        // button panel
+        buttonOK = new JButton(Messages.getString("Okay")); //$NON-NLS-1$
+        buttonCancel = new JButton(Messages.getString("Cancel")); //$NON-NLS-1$
 
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
@@ -230,6 +231,13 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
             }
         });
 
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setCallsign(playerName.getText());
+            }
+        });
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -280,6 +288,8 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
     @Override
     public void update() {
         lobbyTable.updateUI();
+        playerName.setText(dataModel.player().callsign());
+        PreferenceManager.getClientPreferences().setLastPlayerName(dataModel.player().callsign());
     }
 
     public class LobbyTableModel extends AbstractTableModel {

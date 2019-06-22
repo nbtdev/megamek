@@ -84,6 +84,19 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
         handleMessage(response);
     }
 
+    @Override
+    public void setCallsign(String callsign) {
+        if (callsign == null) {
+            return;
+        }
+
+        if (callsign.isEmpty()) {
+            return;
+        }
+
+        send(String.format("callsign %s", callsign));
+    }
+
     void updateSessionLobbyList(List<Lobby> lobbies) {
         sessionDataModel.clearLobbies();
         for (Lobby l : lobbies) {
@@ -100,8 +113,16 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                         view.activateSessionView(sessionDataModel, this);
                         lobbyDataModel = null;
                         player = (IPlayer)response.content;
+                        sessionDataModel.updatePlayer(player);
                         setAttachment(player);
                         requestLobbyListing();
+                    }
+
+                    if (response.command.equals("callsign")) {
+                        player = (IPlayer)response.content;
+                        setAttachment(player);
+                        sessionDataModel.updatePlayer(player);
+                        view.updateActiveView();
                     }
 
                     if (response.command.equals("create")) {

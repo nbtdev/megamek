@@ -942,8 +942,9 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
                 session.close();
             }
 
+            String callsign = PreferenceManager.getClientPreferences().getLastPlayerName();
             //session = new LobbySession("ws://lobby.netbattletech.com:5151/lobbies", client.getName(), frame);
-            session = new LobbySession("ws://lobby.netbattletech.com:5151/lobbies", "Player1", frame);
+            session = new LobbySession("ws://lobby.netbattletech.com/lobbies", callsign, frame);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
