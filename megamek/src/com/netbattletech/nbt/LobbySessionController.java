@@ -250,7 +250,7 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
 
     @Override
     public void launch(ILobby lobby) {
-
+        send(String.format("launch %d", lobby.id()));
     }
 
     @Override
