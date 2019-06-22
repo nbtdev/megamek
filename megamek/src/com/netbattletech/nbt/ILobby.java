@@ -1,6 +1,7 @@
 package com.netbattletech.nbt;
 
 public interface ILobby {
+    int id();
     IPlayer owner();
     int playerCount();
     IPlayer player(int index);

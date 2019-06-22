@@ -114,6 +114,9 @@ public class Lobby implements ILobby {
     }
 
     @Override
+    public int id() { return getId(); }
+
+    @Override
     public IPlayer owner() {
         return getOwner();
     }
