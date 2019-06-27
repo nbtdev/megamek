@@ -10,7 +10,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class LobbySessionController extends WebSocketClient implements ISessionViewControl, ILobbyViewControl{
+public class LobbySessionController extends WebSocketClient implements ISessionViewControl, ILobbyViewControl {
+    public interface Listener {
+        void onLaunched(String serverUrl);
+    }
+
     enum Mode {
         SESSION_MODE,
         LOBBY_MODE,
@@ -23,9 +27,12 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
     LobbyData lobbyDataModel;
     IPlayer player;
 
-    public LobbySessionController(String lobbyServiceUrl) throws URISyntaxException {
+    Listener listener;
+
+    public LobbySessionController(String lobbyServiceUrl, Listener listener) throws URISyntaxException {
         super(new URI(lobbyServiceUrl));
         sessionDataModel = new SessionData();
+        this.listener = listener;
     }
 
     public void shutdown() {
@@ -162,6 +169,15 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                         if (lobbyDataModel != null) {
                             lobbyDataModel.setReady(false);
                             view.updateActiveView();
+                        }
+                    }
+
+                    if (response.command.equals("launch")) {
+                        if (response.content.equals("LAUNCH_IN_PROGRESS")) {
+                            // then it's a "launching" notification
+                        } else {
+                            // server launched and this is the URL
+                            this.listener.onLaunched((String)response.content);
                         }
                     }
                 }

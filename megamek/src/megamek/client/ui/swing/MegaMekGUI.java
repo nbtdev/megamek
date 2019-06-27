@@ -934,8 +934,37 @@ public class MegaMekGUI  implements IPreferenceChangeListener, IMegaMekGUI {
             }
 
             String callsign = PreferenceManager.getClientPreferences().getLastPlayerName();
-            //session = new LobbySession("ws://lobby.netbattletech.com:5151/lobbies", callsign, frame);
-            session = new LobbySession("ws://lobby.netbattletech.com/lobbies", callsign, frame);
+            session = new LobbySession(
+                    //"ws://lobby.netbattletech.com:5151/lobbies",
+                    "ws://lobby.netbattletech.com/lobbies",
+                    callsign,
+                    frame,
+                    serverUrl -> {
+                // fetch the callsign again, in case it changed during the UI
+                String callsign1 = PreferenceManager.getClientPreferences().getLastPlayerName();
+
+                // initialize game
+                client = new Client(callsign1, serverUrl);
+                ClientGUI gui = new ClientGUI(client, controller);
+                controller.clientgui = gui;
+                frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                gui.initialize();
+                frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                if (!client.connect()) {
+                    StringBuffer error = new StringBuffer();
+                    error.append("Error: could not connect to server at ")
+                            .append(serverUrl)
+                            .append('.');
+                    JOptionPane
+                            .showMessageDialog(
+                                    frame,
+                                    error.toString(),
+                                    Messages.getString("MegaMek.ConnectAlert.title"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+                    frame.setVisible(false);
+                    client.die();
+                }
+                launch(gui.getFrame());
+            });
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
