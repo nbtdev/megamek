@@ -20,6 +20,6 @@ COPY gameoptions.xml /megamek/mmconf/
 
 WORKDIR /megamek
 
-CMD ["/megamek/startup", "-dedicated", "-log", "off", "-port", "2346"]
+CMD ["/megamek/startup", "-dedicated", "-port", "2346"]
 
 

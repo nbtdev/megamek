@@ -134,6 +134,7 @@ public class WebSocketServer {
                 setConnectionLostTimeout(0);
                 setConnectionLostTimeout(1000);
                 onListen();
+                System.out.println(String.format("Dedicated WebSocket server listening on port %d", port));
             }
         };
 
