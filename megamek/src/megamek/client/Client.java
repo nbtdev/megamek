@@ -124,6 +124,7 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
     protected int localPlayerNumber = -1;
     private String host;
     private int port;
+    private String serverUrl;
 
     // the game state object
     protected IGame game = new Game();
@@ -150,6 +151,24 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
     private Hashtable<String, Integer> duplicateNameHash = new Hashtable<String, Integer>();
 
     public Map<String, Client> bots = new TreeMap<String, Client>(StringUtil.stringComparator());
+
+    public Client(String name, String serverUrl) {
+        this.name = name;
+        this.serverUrl = serverUrl;
+
+        registerCommand(new HelpCommand(this));
+        registerCommand(new MoveCommand(this));
+        registerCommand(new RulerCommand(this));
+        registerCommand(new ShowEntityCommand(this));
+        registerCommand(new FireCommand(this));
+        registerCommand(new DeployCommand(this));
+        registerCommand(new ShowTileCommand(this));
+        registerCommand(new AddBotCommand(this));
+        registerCommand(new AssignNovaNetworkCommand(this));
+        registerCommand(new SitrepCommand(this));
+
+        rsg = new RandomSkillsGenerator();
+    }
 
     /**
      * Construct a client which will try to connect. If the connection fails, it
@@ -227,7 +246,11 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
      * Attempt to connect to the specified host
      */
     public boolean connect() {
-        return connect(host, port);
+        if (serverUrl != null) {
+            return connect(serverUrl);
+        } else {
+            return connect(host, port);
+        }
     }
 
     /**

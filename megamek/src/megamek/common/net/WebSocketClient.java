@@ -7,6 +7,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 public class WebSocketClient {
     private WebSocketConnection connection = null;
@@ -44,9 +45,8 @@ public class WebSocketClient {
         return packetSerializer;
     }
 
-    protected boolean connect(String hostname, int port) {
+    boolean webSocketConnect(URI uri) {
         try {
-            URI uri = new URI("http", null, hostname, port, null, null, null);
             org.java_websocket.client.WebSocketClient webSocketClient = new org.java_websocket.client.WebSocketClient(uri) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
@@ -83,9 +83,27 @@ public class WebSocketClient {
             };
 
             connection = new WebSocketConnection(webSocketClient);
-            webSocketClient.connect();
+            return webSocketClient.connectBlocking(10, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-            return true;
+    protected boolean connect(String serverUrl) {
+        try {
+            URI uri = new URI(serverUrl);
+            return webSocketConnect(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    protected boolean connect(String hostname, int port) {
+        try {
+            URI uri = new URI("http", null, hostname, port, null, null, null);
+            return webSocketConnect(uri);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
