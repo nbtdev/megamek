@@ -8,4 +8,5 @@ public interface ILobbyDataModel {
     void postChat(IChatEntry chatEntry);
     void updateLobby(ILobby lobby);
     boolean isLaunchEnabled();
+    boolean isRejoinEnabled();
 }

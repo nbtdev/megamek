@@ -5,6 +5,7 @@ public interface ILobbyViewControl {
     void setReady(Boolean ready);
     void postChat(String text);
     void launch(ILobby lobby);
+    void rejoin();
     void kick(ILobby lobby, IPlayer player);
     void onViewClose();
 }

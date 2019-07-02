@@ -8,6 +8,7 @@ public class LobbyData implements ILobbyDataModel {
     Boolean isReady;
     IPlayer self;
     Boolean launchEnabled;
+    Boolean rejoinEnabled;
 
     public LobbyData(ILobby lobby, IPlayer self) {
         this.lobby = lobby;
@@ -15,6 +16,7 @@ public class LobbyData implements ILobbyDataModel {
         this.self = self;
         this.isReady = false;
         this.launchEnabled = false;
+        this.rejoinEnabled = false;
     }
 
     @Override
@@ -63,4 +65,9 @@ public class LobbyData implements ILobbyDataModel {
     public boolean isLaunchEnabled() { return this.launchEnabled; }
 
     public void setLaunchEnabled(boolean enabled) { this.launchEnabled = enabled; }
+
+    @Override
+    public boolean isRejoinEnabled() { return this.rejoinEnabled; }
+
+    public void setRejoinEnabled(boolean enabled) { this.rejoinEnabled = enabled; }
 }

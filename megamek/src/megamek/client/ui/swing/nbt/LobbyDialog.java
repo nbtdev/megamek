@@ -76,6 +76,7 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
         JButton cmdKick = new JButton(Messages.getString("LookingForGame.lobby.kick"));
         cmdReady = new JButton(Messages.getString("LookingForGame.lobby.ready"));
         cmdLaunch = new JButton(Messages.getString("LookingForGame.lobby.launch"));
+        cmdRejoin = new JButton(Messages.getString("LookingForGame.lobby.rejoin"));
 
         updateReady();
 
@@ -87,11 +88,14 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
         c2.gridy++;
         controlBar.add(cmdLaunch, c2);
         c2.gridy++;
+        controlBar.add(cmdRejoin, c2);
+        c2.gridy++;
         c2.weighty = 1.0;
         c2.fill = GridBagConstraints.BOTH;
         controlBar.add(new JPanel(), c2);
         cmdKick.setEnabled(false);
         cmdLaunch.setEnabled(false);
+        cmdRejoin.setVisible(false);
 
         c.fill = GridBagConstraints.VERTICAL;
         c.gridx = 1;
@@ -127,6 +131,13 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onLaunch();
+            }
+        });
+
+        cmdRejoin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRejoin();
             }
         });
 
@@ -175,6 +186,10 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
         controller.launch(dataModel.lobby());
     }
 
+    private void onRejoin() {
+        controller.rejoin();
+    }
+
     @Override
     public synchronized void onAnnouncement(String message) {
         chat.onIncomingChat(null, message);
@@ -201,6 +216,11 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
         updateReady();
 
         cmdLaunch.setEnabled(dataModel.isLaunchEnabled());
+
+        if (dataModel.isRejoinEnabled()) {
+            cmdRejoin.setVisible(true);
+            cmdRejoin.setEnabled(true);
+        }
     }
 
     void close() {
