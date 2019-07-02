@@ -29,6 +29,8 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
 
     Listener listener;
 
+    String currentServerUrl;
+
     public LobbySessionController(String lobbyServiceUrl, Listener listener) throws URISyntaxException {
         super(new URI(lobbyServiceUrl));
         sessionDataModel = new SessionData();
@@ -184,10 +186,13 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                             // then it's a "launching" notification, set the state such that the
                             // launch button cannot be pressed again until the server replies
                             lobbyDataModel.setLaunchEnabled(false);
+                            lobbyDataModel.setRejoinEnabled(false);
                         } else {
                             // server launched and this is the URL
-                            this.listener.onLaunched((String)response.content);
+                            currentServerUrl = (String)response.content;
+                            this.listener.onLaunched(currentServerUrl);
                             lobbyDataModel.setLaunchEnabled(true);
+                            lobbyDataModel.setRejoinEnabled(true);
                         }
                         view.updateActiveView();
                     }
@@ -297,6 +302,16 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
     @Override
     public void launch(ILobby lobby) {
         send(String.format("launch %d", lobby.id()));
+    }
+
+    @Override
+    public void rejoin() {
+        if (currentServerUrl == null) {
+            return;
+        }
+
+        // else, try to head back in
+        this.listener.onLaunched(currentServerUrl);
     }
 
     @Override
