@@ -322,7 +322,7 @@ public class LookingForGameDialog extends JDialog implements LobbySessionView.Ta
                     case 0:
                         return sessionDataModel.lobbies().get(rowIndex);
                     case 1:
-                        return sessionDataModel.lobbies().get(rowIndex).playerCount();
+                        return sessionDataModel.lobbies().get(rowIndex).playerCount() + 1;
                     case 2:
                         return sessionDataModel.lobbies().get(rowIndex).lowerLimit();
                     case 3:
