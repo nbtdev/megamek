@@ -136,7 +136,6 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
 
                     if (response.command.equals("create")) {
                         Lobby l = (Lobby) response.content;
-                        sessionDataModel.addLobby(l);
                         lobbyDataModel = new LobbyData(l, getAttachment());
                         mode = Mode.LOBBY_MODE;
                         view.activateLobbyView(lobbyDataModel, this);
