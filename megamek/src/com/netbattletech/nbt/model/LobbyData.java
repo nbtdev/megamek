@@ -7,11 +7,14 @@ public class LobbyData implements ILobbyDataModel {
     Chat chat;
     Boolean isReady;
     IPlayer self;
+    Boolean launchEnabled;
 
     public LobbyData(ILobby lobby, IPlayer self) {
         this.lobby = lobby;
         this.chat = new Chat();
         this.self = self;
+        this.isReady = false;
+        this.launchEnabled = false;
     }
 
     @Override
@@ -55,4 +58,9 @@ public class LobbyData implements ILobbyDataModel {
     public void setReady(Boolean ready) {
         this.isReady = ready;
     }
+
+    @Override
+    public boolean isLaunchEnabled() { return this.launchEnabled; }
+
+    public void setLaunchEnabled(boolean enabled) { this.launchEnabled = enabled; }
 }

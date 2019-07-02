@@ -14,6 +14,7 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
     JList playerList;
     JButton cmdReady;
     JButton cmdLaunch;
+    JButton cmdRejoin;
     ChatWidget chat;
     PlayerListModel playerListModel;
     ILobbyDataModel dataModel;
@@ -199,18 +200,7 @@ public class LobbyDialog extends JDialog implements LobbySessionView.Target {
         ready = dataModel.ready();
         updateReady();
 
-        // if all players are ready, enable the Launch button; otherwise, don't
-        int playerCount = dataModel.lobby().playerCount();
-        boolean enableLaunch = (playerCount > 0) && dataModel.isOwner();
-        for (int i = 0; i < playerCount; ++i) {
-            IPlayer player = dataModel.lobby().player(i);
-            enableLaunch &= player.ready();
-        }
-
-        IPlayer owner = dataModel.lobby().owner();
-        enableLaunch &= owner.ready();
-
-        cmdLaunch.setEnabled(enableLaunch);
+        cmdLaunch.setEnabled(dataModel.isLaunchEnabled());
     }
 
     void close() {
