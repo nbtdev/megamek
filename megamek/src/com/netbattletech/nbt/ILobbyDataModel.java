@@ -7,4 +7,5 @@ public interface ILobbyDataModel {
     Boolean isOwner();
     void postChat(IChatEntry chatEntry);
     void updateLobby(ILobby lobby);
+    boolean isLaunchEnabled();
 }

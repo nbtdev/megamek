@@ -144,6 +144,10 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                         Lobby l = (Lobby) response.content;
                         lobbyDataModel = new LobbyData(l, getAttachment());
                         mode = Mode.LOBBY_MODE;
+
+                        // recalculate lobby data model state
+                        updateLobbyDataModel();
+
                         view.activateLobbyView(lobbyDataModel, this);
                     }
 
@@ -157,6 +161,9 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                         mode = Mode.SESSION_MODE;
                         view.activateSessionView(sessionDataModel, this);
                         lobbyDataModel = null;
+
+                        // recalculate lobby data model state
+                        updateLobbyDataModel();
 
                         // request an updated lobby listing
                         requestLobbyListing();
@@ -174,11 +181,15 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
 
                     if (response.command.equals("launch")) {
                         if (response.content.equals("LAUNCH_IN_PROGRESS")) {
-                            // then it's a "launching" notification
+                            // then it's a "launching" notification, set the state such that the
+                            // launch button cannot be pressed again until the server replies
+                            lobbyDataModel.setLaunchEnabled(false);
                         } else {
                             // server launched and this is the URL
                             this.listener.onLaunched((String)response.content);
+                            lobbyDataModel.setLaunchEnabled(true);
                         }
+                        view.updateActiveView();
                     }
                 }
             } else {
@@ -198,6 +209,10 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
                 if (response.content instanceof ILobby) {
                     ILobby lobby = (ILobby)response.content;
                     lobbyDataModel.updateLobby(lobby);
+
+                    // recalculate lobby data model state
+                    updateLobbyDataModel();
+
                     view.updateActiveView();
                 }
             }
@@ -214,6 +229,21 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
             ChatEntry chatMsg = (ChatEntry)response.content;
             view.postChat(chatMsg.author(), chatMsg.message());
         }
+    }
+
+    private void updateLobbyDataModel() {
+        // if all players are ready, enable the Launch button; otherwise, don't
+        int playerCount = lobbyDataModel.lobby().playerCount();
+        boolean enableLaunch = (playerCount > 0) && lobbyDataModel.isOwner();
+        for (int i = 0; i < playerCount; ++i) {
+            IPlayer player = lobbyDataModel.lobby().player(i);
+            enableLaunch &= player.ready();
+        }
+
+        IPlayer owner = lobbyDataModel.lobby().owner();
+        enableLaunch &= owner.ready();
+
+        lobbyDataModel.setLaunchEnabled(enableLaunch);
     }
 
     public void requestLobbyListing() {
