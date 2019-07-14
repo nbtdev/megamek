@@ -82,7 +82,7 @@
     </gameoption>
     <gameoption>
         <optionname>conditional_ejection</optionname>
-        <optionvalue>false</optionvalue>
+        <optionvalue>true</optionvalue>
     </gameoption>
     <gameoption>
         <optionname>real_blind_drop</optionname>
@@ -202,7 +202,7 @@
     </gameoption>
     <gameoption>
         <optionname>manual_shutdown</optionname>
-        <optionvalue>false</optionvalue>
+        <optionvalue>true</optionvalue>
     </gameoption>
     <gameoption>
         <optionname>tacops_walk_backwards</optionname>
@@ -250,7 +250,7 @@
     </gameoption>
     <gameoption>
         <optionname>hidden_units</optionname>
-        <optionvalue>false</optionvalue>
+        <optionvalue>true</optionvalue>
     </gameoption>
     <gameoption>
         <optionname>tacops_trip_attack</optionname>
@@ -294,7 +294,7 @@
     </gameoption>
     <gameoption>
         <optionname>begin_shutdown</optionname>
-        <optionvalue>false</optionvalue>
+        <optionvalue>true</optionvalue>
     </gameoption>
     <gameoption>
         <optionname>tacops_ziplines</optionname>
@@ -374,7 +374,7 @@
     </gameoption>
     <gameoption>
         <optionname>exclusive_db_deployment</optionname>
-        <optionvalue>true</optionvalue>
+        <optionvalue>false</optionvalue>
     </gameoption>
     <gameoption>
         <optionname>no_clan_physical</optionname>
