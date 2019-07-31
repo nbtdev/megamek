@@ -67,6 +67,9 @@ deploy_client:
     - aws s3 cp megamek/build/distributions/megamek-$NBT_MM_BUILD_NAME.tar.gz s3://$AWS_BUCKET/megamek-nbt-mm.tar.gz
     - aws s3 cp megamek/build/distributions/megamek-mac-$NBT_MM_BUILD_NAME.tar.bz2 s3://$AWS_BUCKET/megamek-nbt-mm-mac.tar.bz2
     - aws s3 cp megamek/build/distributions/megamek-windows-$NBT_MM_BUILD_NAME.zip s3://$AWS_BUCKET/megamek-nbt-mm-windows.zip
+    - aws s3api put-object-acl --bucket nbt-mm --key megamek-$NBT_MM_BUILD_NAME-windows.zip --acl public-read
+    - aws s3api put-object-acl --bucket nbt-mm --key megamek-$NBT_MM_BUILD_NAME-mac.tar.bz2 --acl public-read
+    - aws s3api put-object-acl --bucket nbt-mm --key megamek-$NBT_MM_BUILD_NAME.tar.gz --acl public-read
 
 #deploy_server:
 #  stage: deploy
