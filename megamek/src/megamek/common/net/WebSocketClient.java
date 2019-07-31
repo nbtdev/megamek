@@ -37,6 +37,9 @@ public class WebSocketClient {
     protected void onRemoteDisconnection() {
     }
 
+    protected void onLocalDisconnection() {
+    }
+
     private PacketSerializer getPacketSerializer() {
         if (packetSerializer == null) {
             packetSerializer = new PacketSerializer(PacketMarshallerFactory.getInstance().getMarshaller(PacketMarshaller.NATIVE_SERIALIZATION_MARSHALING));
@@ -73,6 +76,8 @@ public class WebSocketClient {
                 public void onClose(int code, String reason, boolean remote) {
                     if (remote) {
                         onRemoteDisconnection();
+                    } else {
+                        onLocalDisconnection();
                     }
                 }
 
