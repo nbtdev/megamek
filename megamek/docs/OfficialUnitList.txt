@@ -1077,6 +1077,7 @@ Explorer JumpShip (Standard)|
 Liberty Jumpship (Standard)|
 Leviathan Jumpship (Standard)|
 Aquilla Transport Jumpship (Standard)|
+Autocannon/10 Field Gun Infantry (Standard)|
 Clan Field Gunners (LBX10)|
 Field Gunners (AC20)|
 Field Artillery (Thumper)|
@@ -1895,9 +1896,22 @@ ScavengerMech SC-V SalvageMech (Standard)|
 Shugosha LAW-QM1 Q-Mech|
 ScavengerMech SC-V-M MilitiaMech (Standard)|
 Pompier Firemech GM-3CD|
+Lancelot C|
+Minsk MNK-101|
+Mongoose C 2|
+Omni-Corvis B|
+Omni-Corvis Prime|
+Coyotl B|
+Omni-Corvis A|
+Mongoose C|
+Lancelot C 2|
+Fox CS-1|
 Atlas AS7-D (Danielle)|
 Ostroc OSR-2C (Michi)|
 Stalker STK-3F (Jagawen)|
+Phoenix Hawk PXH-3D (Jiemin)|
+Marauder MAD-7D (Von Staskov)|
+Marshal MHL-6FR|
 Galahad GLH-3D (Laodices)|
 Tian-Zong TNZ-N3 'Jasminda'|
 Centurion CN9-YLW3 'Yen Lo Wang'|
@@ -1906,6 +1920,10 @@ BattleMaster BLR-3M (Rogers)|
 Nightstar NSR-9J (Brubaker)|
 Albatross ALB-5W (Dantalion)|
 Emperor EMP-6ME 'Mercury Elite'|
+Warhammer WHM-6K (Olesko)|
+Vulcan VL-2T (Timms)|
+Jenner JR7-F (Smith)|
+Panther PNT-9ALAG|
 Marauder MAD-SD (Douglass)|
 Thunderbolt TDR-5S-T (Tallman)|
 Atlas AS7-WGS (Samsonov)|
@@ -1971,6 +1989,12 @@ Wasp LAM Mk I WSP-100A|
 Orion ON1-K (Kerensky)|
 Ti Ts'ang TSG-9 'China Doll'|
 Banshee BNC-9S|
+Thunderbolt TDR-5D|
+Atlas AS7-A|
+Javelin JVN-10A|
+Zeus ZEU-6A|
+Wolverine WVR-6D|
+Templar III TLR2-J 'Arthur'|
 Crosscut ED-X2 (RL)|
 Daedalus GTX2A 'Stevedore'|
 Falcon FLC-4Nb (Saho)|
@@ -4076,19 +4100,26 @@ Quickdraw QKD-8X|
 Charger CGR-1X1|
 Firestarter FS9-X81|
 Arbiter SecurityMech ARB-001|
+Corsair COR-5R|
 Roughneck RGH-3A|
+Corsair COR-7A|
 Sun Spider C|
 Roughneck RGH-R Reaver|
 Sun Spider Vanguard|
 Roughneck RGH-2A|
 Roughneck RGH-1A|
 Roughneck RGH-1C|
+Corsair COR-5T|
+Corsair COR-BR Broadside|
 Roughneck RGH-PH Powerhouse|
 Sun Spider Manul|
 Sun Spider D|
 Sun Spider B|
+Corsair COR-6R|
 Sun Spider A|
 Sun Spider Prime|
+Corsair COR-RA Ravager|
+Corsair COR-7R|
 Roughneck RGH-1B|
 Sagittaire SGT-9D|
 Templar TLR1-OD|
@@ -4216,6 +4247,13 @@ Lancelot LNC25-01sl|
 Warhammer WHM-6Rk|
 Phoenix Hawk PXH-1Kk|
 Hammerhands HMH-3D (Kessem)|
+Nightstar NSR-9J (Holt)|
+Doloire DLR-OBLO|
+Uller (Kit Fox) BLO|
+Mad Cat (Timber Wolf) BLO|
+Vulture Mk III (Mad Dog Mk III) BLO|
+Templar TLR1-OBLO|
+Avatar AV1-OBLO|
 Stag II ST-24G|
 Malak C-MK-OS Caelestis|
 Archangel C-ANG-OS Caelestis|
@@ -4938,7 +4976,11 @@ Tiger Medium Tank T-12|
 Hipparch Cavalry Tank (Standard)|
 Wayland Mobile Base (Standard)|
 Gallant Urban Assault Tank (Standard)|
+Kokou Defense Tank (Standard)|
+Kokou Defense Tank (XL)|
 Tokugawa Heavy Tank SD2|
+Flatbed Railcar|
+Adelante Train (Tractor)|
 Koryu Submarine (Military)|
 Koryu Submarine (Civilian)|
 Neptune Submarine (Hunter-Killer)|
@@ -5003,7 +5045,7 @@ Cobra Transport VTOL (Original)|
 Crow Scout Helicopter (C3)|
 Rhino Fire Support Tank (Royal)|
 Turhan Urban Combat Vehicle (Standard)|
-Daimyo HQ 67-K|
+Daimyo HQ 67-NC|
 Bellona Hover Tank (Standard)|
 Darter Scout Car (C3)|
 Saxon APC (Laser)|
@@ -6074,6 +6116,7 @@ Gladiator Battle Armor S|
 Void Medium Battle Armor (Minelayer)|
 Sylph Battle Armor (Enhanced)|
 Machina Domini Interface Armor (Standard)|
+TinStar BattleArmor (Standard)|
 Tunnel Rat Mining Exoskeleton IV [Armored Glove/LMG]|
 Resgate PA(L) (Spotter)|
 Gladiator Exoskeleton (Standard) [AG]|
@@ -6317,6 +6360,15 @@ Intrepid Assault Craft (2331)|
 Dragonstar Passenger Transport (Standard)|
 Dragonstar Assault Transport (3060)|
 Foxhound Gunboat TIG-40|
+Issedone B|
+Ogotai B|
+Goth Prime|
+Ogotai Prime|
+Ogotai A|
+Goth B|
+Goth A|
+Issedone Prime|
+Issedone A|
 Slayer SL-15B|
 Transit TR-10|
 Sparrowhawk SPR-H5K|

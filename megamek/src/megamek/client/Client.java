@@ -228,6 +228,12 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
     }
 
     @Override
+    protected void onLocalDisconnection() {
+        // for now handle these the same -- the player should be notified if they got disco'ed
+        onRemoteDisconnection();
+    }
+
+    @Override
     protected void onRemoteDisconnection() {
         // We can't just run this directly, otherwise we open up all sorts
         // of concurrency issues with the AWT event dispatch thread.
