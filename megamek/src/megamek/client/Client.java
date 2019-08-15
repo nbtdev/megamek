@@ -251,6 +251,9 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
      */
     public boolean connect() {
         if (serverUrl != null) {
+            // put something non-null in here so that we can exit gracefully on
+            // disconnect
+            host = "nbt-mm";
             return connect(serverUrl);
         } else {
             return connect(host, port);
