@@ -58,7 +58,7 @@ deploy_client:
   stage: deploy_prod
   only:
     refs:
-      - master
+      - NBT-MM
   environment: 
     name: PROD
   variables:
@@ -113,7 +113,7 @@ deploy_server:
   stage: deploy_prod
   only:
     refs:
-      - master
+      - NBT-MM
   environment: 
     name: PROD
   variables:
