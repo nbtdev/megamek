@@ -13,6 +13,7 @@ public class Lobby implements ILobby {
     private Integer id;
     private Integer leagueId;
     private Player owner;
+    String serverUrl;
     private List<Player> players = new ArrayList<>();
     private Integer upperLimit;
     private Integer lowerLimit = 0;
@@ -30,6 +31,10 @@ public class Lobby implements ILobby {
 
     public Integer getLeagueId() {
         return leagueId;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
     }
 
     public void setLeagueId(Integer leagueId) {
@@ -133,6 +138,11 @@ public class Lobby implements ILobby {
         }
 
         return getPlayers().get(index);
+    }
+
+    @Override
+    public String serverUrl() {
+        return getServerUrl();
     }
 
     @Override
