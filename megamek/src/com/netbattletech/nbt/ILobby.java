@@ -5,6 +5,7 @@ public interface ILobby {
     IPlayer owner();
     int playerCount();
     IPlayer player(int index);
+    String serverUrl();
     int lowerLimit();
     int upperLimit();
     void addPlayer(IPlayer player);

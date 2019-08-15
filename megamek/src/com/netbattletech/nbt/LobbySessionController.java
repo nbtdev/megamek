@@ -143,13 +143,15 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
 
                     if (response.command.equals("join")) {
                         Lobby l = (Lobby) response.content;
+                        currentServerUrl = l.getServerUrl();
                         lobbyDataModel = new LobbyData(l, getAttachment());
                         mode = Mode.LOBBY_MODE;
 
-                        // recalculate lobby data model state
-                        updateLobbyDataModel();
-
                         view.activateLobbyView(lobbyDataModel, this);
+
+                        // recalculate lobby data model state and refresh the view
+                        updateLobbyDataModel();
+                        view.updateActiveView();
                     }
 
                     if (response.command.equals("list")) {
@@ -248,6 +250,7 @@ public class LobbySessionController extends WebSocketClient implements ISessionV
         enableLaunch &= owner.ready();
 
         lobbyDataModel.setLaunchEnabled(enableLaunch);
+        lobbyDataModel.setRejoinEnabled(lobbyDataModel.lobby().serverUrl() != null);
     }
 
     public void requestLobbyListing() {
