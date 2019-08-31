@@ -6,7 +6,7 @@ services:
 variables:
   AWS_ECR_URI: 068936280303.dkr.ecr.us-west-2.amazonaws.com/nbt-mm
   AWS_BUCKET: nbt-mm
-  NBT_MM_BUILD_NAME: 0.45.5-SNAPSHOT
+  NBT_MM_BUILD_NAME: 0.46.0
 
 stages:
   - build
@@ -58,7 +58,7 @@ deploy_client:
   stage: deploy_prod
   only:
     refs:
-      - master
+      - NBT-MM
   environment: 
     name: PROD
   variables:
@@ -113,12 +113,12 @@ deploy_server:
   stage: deploy_prod
   only:
     refs:
-      - master
+      - NBT-MM
   environment: 
     name: PROD
   variables:
     GIT_STRATEGY: none
-    NBT_MM_BUILD_NAME: 0.45.5-SNAPSHOT
+    NBT_MM_BUILD_NAME: 0.46.0
   script:
     - cp megamek/build/distributions/*.tar.gz docker
     - cd docker
