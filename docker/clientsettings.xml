@@ -2,52 +2,36 @@
 <MegaMekSettings>
     <store name="ClientSettings">
         <preference name="LastPlayerCamoName" value="Blue"/>
-        <preference name="ShowUnitId" value="true"/>
         <preference name="LastPlayerCategory" value="-- No Camo --"/>
-        <preference name="LastPlayerColor" value="0"/>
-        <preference name="LastPlayerName" value="Cupcake"/>
-        <preference name="MapTileset" value="hq_saxarba.tileset"/>
+        <preference name="LastPlayerName" value="Derv"/>
+        <preference name="MapTileset" value="saxarba.tileset"/>
         <preference name="megamek.megamek.metaservername" value="https://api.megamek.org/servers/announce"/>
         <preference name="Locale" value="en"/>
     </store>
     <store name="megamek.client.ui.swing.ButtonOrderPreferences">
         <preference name="protoPhysical" value="12"/>
         <preference name="trip" value="9"/>
-        <preference name="fireSearchlight" value="7"/>
+        <preference name="fireSearchlight" value="8"/>
         <preference name="fireStrafe" value="11"/>
         <preference name="fireClearTurret" value="12"/>
         <preference name="fireClearWeaponJam" value="13"/>
         <preference name="fireCalled" value="14"/>
         <preference name="jumpjet" value="11"/>
-        <preference name="fireFlipArms" value="6"/>
         <preference name="grapple" value="10"/>
-        <preference name="fireCancel" value="8"/>
-        <preference name="fireFindClub" value="10"/>
+        <preference name="fireFlipArms" value="7"/>
+        <preference name="fireCancel" value="10"/>
+        <preference name="fireFindClub" value="9"/>
     </store>
     <store name="megamek.client.ui.swing.GUIPreferences">
-        <preference name="AoHexShadows" value="true"/>
-        <preference name="WindowSizeWidth" value="1920"/>
-        <preference name="DisplayPosY" value="234"/>
+        <preference name="FovHighlightAlpha" value="35"/>
         <preference name="ShadowMap" value="true"/>
-        <preference name="DisplayPosX" value="377"/>
-        <preference name="MinimapPosY" value="249"/>
-        <preference name="MechSelectorSizeWidth" value="928"/>
-        <preference name="MinimapPosX" value="1292"/>
-        <preference name="MapZoomIndex" value="6"/>
-        <preference name="NagForMapEdReadme" value="false"/>
-        <preference name="MechSelectorSizeHeight" value="911"/>
-        <preference name="GameOptionsSizeWidth" value="539"/>
-        <preference name="FovHighlight" value="false"/>
-        <preference name="ShowFieldOfFire" value="false"/>
-        <preference name="NagForReadme" value="false"/>
-        <preference name="MechSelectorUnitType" value="1"/>
-        <preference name="WindowPosY" value="0"/>
-        <preference name="WindowPosX" value="0"/>
         <preference name="LevelHighlight" value="true"/>
-        <preference name="WindowSizeHeight" value="1066"/>
-        <preference name="MechSelectorRuleType" value="[2, 4, 6, 8]"/>
-        <preference name="FovHighlightAlpha" value="0"/>
-        <preference name="FovDarkenAlpha" value="51"/>
-        <preference name="SOFTCENTER" value="true"/>
+        <preference name="AoHexShadows" value="true"/>
+        <preference name="WindowSizeHeight" value="836"/>
+        <preference name="NagForReadme" value="false"/>
+        <preference name="MapZoomIndex" value="4"/>
+        <preference name="GameOptionsSizeWidth" value="539"/>
+        <preference name="FovDarkenAlpha" value="96"/>
+        <preference name="WindowSizeWidth" value="1529"/>
     </store>
 </MegaMekSettings>
