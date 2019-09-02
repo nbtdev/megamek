@@ -164,7 +164,6 @@ public class Client extends WebSocketClient implements IClientCommandHandler {
         registerCommand(new ShowTileCommand(this));
         registerCommand(new AddBotCommand(this));
         registerCommand(new AssignNovaNetworkCommand(this));
-        registerCommand(new SitrepCommand(this));
 
         rsg = new RandomSkillsGenerator();
     }
